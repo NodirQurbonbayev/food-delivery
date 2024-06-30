@@ -21,13 +21,31 @@ class MySliverAppbar extends StatelessWidget {
       floating: false,
       pinned: true,
       actions: [
-        IconButton(
-          icon: const Icon(CupertinoIcons.shopping_cart),
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CartPage()));
-          },
-        ),
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 13,
+              child: Image.asset("assets/images/circleImage/circule_person.png"),
+            ),
+           SizedBox(width: 5,),
+           const Text(
+             "Nodir Qurbonbayev",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              color: Colors.grey
+            ),
+            ),
+            SizedBox(width: 150,),
+            IconButton(
+              icon: const Icon(CupertinoIcons.shopping_cart),
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => CartPage()));
+              },
+            ),
+          ],
+        )
       ],
       foregroundColor: Theme.of(context).colorScheme.inversePrimary,
       flexibleSpace: FlexibleSpaceBar(

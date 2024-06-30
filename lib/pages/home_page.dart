@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter/compenets/my_current_loaction.dart';
-import 'package:my_flutter/compenets/my_describtion_Box.dart';
+import 'package:my_flutter/compenets/my_slider_gorzintal.dart';
 import 'package:my_flutter/compenets/my_drawer.dart';
 import 'package:my_flutter/compenets/my_food_tile.dart';
 import 'package:my_flutter/compenets/my_sliver_appBar.dart';
@@ -15,15 +14,13 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(length: FoodCategory.values.length, vsync: this);
+    _tabController = TabController(length: FoodCategory.values.length, vsync: this);
   }
 
   @override
@@ -31,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen>
     _tabController.dispose();
     super.dispose();
   }
+
 
   List<Food> _filterMenuCategory(FoodCategory category, List<Food> fullMenu) {
     return fullMenu.where((food) => food.foodCategory == category).toList();
@@ -46,8 +44,10 @@ class _HomeScreenState extends State<HomeScreen>
           Food food = categoryMenu[index];
           return MyFoodTile(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FoodPage(food)));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FoodPage(food)),
+              );
             },
             food: food,
           );
@@ -59,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       drawer: Drawer(
         child: MyDrawer(),
       ),
@@ -68,15 +69,11 @@ class _HomeScreenState extends State<HomeScreen>
             MySliverAppbar(
               title: MyTabbar(tabController: _tabController),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Divider(
-                    endIndent: 25,
-                    indent: 25,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  MyCurrentLoaction(),
-                  MyDescriptionBox(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 100),
+                  child: MySliderGorzintal()
+                  )
                 ],
               ),
             ),

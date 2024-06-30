@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +90,7 @@ class Restaurant extends ChangeNotifier {
         name: "Greek Salad",
         description:
             "Tomatoes, cucumber, red onions, olives, and feta cheese with olive oil and herbs.",
-        imagePath: "assets/images/salads/greek_salad.png",
+        imagePath: "assets/images/salads/greek_salad.jpeg",
         price: 8.49,
       ),
       Food(
@@ -104,7 +103,7 @@ class Restaurant extends ChangeNotifier {
         name: "Caesar Salad",
         description:
             "Crisp romaine lettuce, parmesan cheese, croutons, and Caesar dressing.",
-        imagePath: "assets/images/salads/caeser_salad.png",
+        imagePath: "assets/images/salads/caeser_salad.jpg",
         price: 7.49,
       ),
       Food(
@@ -117,7 +116,7 @@ class Restaurant extends ChangeNotifier {
         name: "Quinoa Salad",
         description:
             "Quinoa mixed with cucumbers, tomatoes, bell peppers, and a lemon vinaigrette.",
-        imagePath: "assets/images/salads/quinoa_salad.png",
+        imagePath: "assets/images/salads/quinoa_salad.jpg",
         price: 9.99,
       ),
       Food(
@@ -130,7 +129,7 @@ class Restaurant extends ChangeNotifier {
         name: "Asian Sesame Salad",
         description:
             "Delight in the flavors of the East with this sesame-infused salad, including mixed greens.",
-        imagePath: "assets/images/salads/asiansesame_salad.png",
+        imagePath: "assets/images/salads/asiansesame_salad.jpg",
         price: 9.99,
       ),
       Food(
@@ -143,7 +142,7 @@ class Restaurant extends ChangeNotifier {
         name: "Southwest Chicken Salad",
         description:
             "This colorful salad combines the zesty flavors of the Southwest with mixed greens.",
-        imagePath: "assets/images/salads/southwest_salad.png",
+        imagePath: "assets/images/salads/southwest_salad.jpg",
         price: 9.99,
       ),
       // pizza
@@ -156,7 +155,7 @@ class Restaurant extends ChangeNotifier {
         ],
         name: "Chicago Style Pizza",
         description: "Chicago-style pizza usually refers to deep-dish pizza, which is a thick pizza baked in a pan and layered with cheese, fillings like meat and vegetables, and sauce",
-        imagePath: "",
+        imagePath: "assets/images/pizza/chicaco_pizza.jpg",
         price: 4.99,
       ),
       Food(
@@ -193,7 +192,7 @@ class Restaurant extends ChangeNotifier {
         ],
         name: "Neapolitan Pizza",
         description:
-            " This style of pizza is prepared with simple and fresh ingredients: a basic dough, raw tomatoes, fresh mozzarella cheese, fresh basil, and olive oil. ",
+            "This style of pizza is prepared with simple and fresh ingredients: a basic dough, raw tomatoes, fresh mozzarella cheese, fresh basil, and olive oil. ",
         imagePath: "assets/images/pizza/neapolitan_pizza.jpg",
         price: 4.49,
       ),

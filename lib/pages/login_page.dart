@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_flutter/compenets/my_Text_field.dart';
+import 'package:my_flutter/pages/sign_up_screen.dart';
+import 'package:my_flutter/services/firebase_auth.dart';
+import 'package:my_flutter/compenets/my_text_field.dart';
 import 'package:my_flutter/compenets/my_buttons.dart';
 import 'package:my_flutter/pages/home_page.dart';
 
 class SignInScreen extends StatefulWidget {
   final void Function()? onTapRegister;
 
-  const SignInScreen({Key? key, this.onTapRegister, required void Function() ontap}) : super(key: key);
+  const SignInScreen({Key? key, this.onTapRegister}) : super(key: key);
 
   @override
   _SignInScreenState createState() => _SignInScreenState();
@@ -16,15 +17,14 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  String errorMessage = '';
   final _formKey = GlobalKey<FormState>();
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+      AuthService().signIn(emailController.text, passwordController.text,context);
     }
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
   }
 
   @override
@@ -40,17 +40,17 @@ class _SignInScreenState extends State<SignInScreen> {
               Icon(
                 Icons.lock_open_rounded,
                 size: 72,
-                color: Theme.of(context).colorScheme.inversePrimary,
+                color: Theme.of(context).colorScheme.primary,
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25),
               Text(
                 "Food Delivery App",
                 style: TextStyle(
                   fontSize: 16,
-                  color: Theme.of(context).colorScheme.inversePrimary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25),
               MyTextField(
                 hintText: "Email",
                 obscureText: false,
@@ -59,11 +59,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
                   }
-                  // Additional email validation can be added here
                   return null;
                 },
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               MyTextField(
                 hintText: "Password",
                 obscureText: true,
@@ -75,33 +74,46 @@ class _SignInScreenState extends State<SignInScreen> {
                   return null;
                 },
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25),
               MyButtons(
                 text: "Sign In",
                 onTap: _login,
               ),
-              const SizedBox(height: 25),
+              SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "Not a member?",
                     style: TextStyle(
                       color: Colors.grey,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   GestureDetector(
                     onTap: widget.onTapRegister,
-                    child: const Text(
-                      "Register now",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen()));
+                      },
+                      child: Text(
+                        "Register now",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ],
+              ),
+              SizedBox(height: 10),
+              Text(
+                errorMessage,
+                style: TextStyle(color: Colors.red),
               ),
             ],
           ),

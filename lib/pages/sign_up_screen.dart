@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter/compenets/my_Text_field.dart';
 import 'package:my_flutter/compenets/my_buttons.dart';
+import 'package:my_flutter/pages/login_page.dart';
+import 'package:my_flutter/services/firebase_auth.dart';
 
 class SignUpScreen extends StatefulWidget {
   final void Function()? ontap;
@@ -17,11 +19,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void _signIn() {
+  void _signUp() async {
     if (_formKey.currentState!.validate()) {
       print(
           'Email: ${emailController.text}, Password: ${passwordController.text}');
+      await AuthService()
+          .signUp(emailController.text, passwordController.text, context);
     }
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignInScreen()));
   }
 
   @override
@@ -86,10 +91,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               const SizedBox(height: 25),
               MyButtons(
-                text: "Sign Up",
-                onTap: () {
-                },
-              ),
+                  text: "Sign Up",
+                  onTap: () {
+                    _signUp();
+                  }),
               const SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -103,11 +108,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(width: 4),
                   GestureDetector(
                     onTap: widget.ontap,
-                    child: const Text(
-                      "Login now",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignInScreen()));
+                      },
+                      child: Text(
+                        "Login now",
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
