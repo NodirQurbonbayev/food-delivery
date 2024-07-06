@@ -1,77 +1,56 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:my_flutter/pages/login_page.dart';
+import 'package:my_flutter/auth/login_page.dart';
+import 'package:my_flutter/pages/home_page.dart';
 
 class AuthService {
-  Future<void> signIn(
-      String email, String password, BuildContext context) async {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> signIn(String email, String password, BuildContext context) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      await Future.delayed(Duration(seconds: 1));
-    } on FirebaseAuthException catch (e) {
-      String message = '';
-      if (e.code == "weak-password") {
-        if (e.code == 'weak-password') {
-          message = 'The password provided is too weak.';
-        } else if (e.code == 'email-already-in-use') {
-          message = 'An account already exists with that email.';
-        } else {
-          message = 'Error: ${e.message}';
-        }
-      } else {
-        message = 'Error: $e';
+      if (userCredential.user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
       }
-
-      Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
+    } catch (e) {
+      print("Error signing in: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error signing in: $e")),
       );
-    } catch (e) {}
+    }
   }
 
-   Future<void> signUp(String email, String password, BuildContext context) async {
+  Future<void> signUp(String email, String password, BuildContext context) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-    } catch (e) {
-      String message = '';
-      if (e is FirebaseAuthException) {
-        if (e.code == 'weak-password') {
-          message = 'The password provided is too weak.';
-        } else if (e.code == 'email-already-in-use') {
-          message = 'An account already exists with that email.';
-        } else {
-          message = 'Error: ${e.message}';
-        }
-      } else {
-        message = 'Error: $e';
+      if (userCredential.user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SignInScreen()),
+        );
       }
-
-      Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0,
+    } catch (e) {
+      print("Error signing up: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error signing up: $e")),
       );
     }
   }
 
   Future<void> signOut(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    await Future.delayed(Duration(seconds: 1));
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SignInScreen()));
+    await _auth.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => SignInScreen()),
+    );
   }
 }
